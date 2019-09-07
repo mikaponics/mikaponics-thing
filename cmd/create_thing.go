@@ -12,10 +12,10 @@ import (
 )
 
 func init() {
-    rootCmd.AddCommand(versionCmd)
+    rootCmd.AddCommand(createThingCmd)
 }
 
-var versionCmd = &cobra.Command{
+var createThingCmd = &cobra.Command{
     Use:   "create_thing [FIELDS]",
     Short: "Create thing.",
     Long:  `Command used to create a Mikaponics thing.`,
