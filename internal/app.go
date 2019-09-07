@@ -22,15 +22,17 @@ type MikaponicsThing struct {
 func InitMikaponicsThing(dbHost, dbPort, dbUser, dbPassword, dbName, webServerAddress string) (*MikaponicsThing) {
 
 	// Initialize and connect our database layer for the entire application.
-    dbInstance := models.InitDataAccessLayer(dbHost, dbPort, dbUser, dbPassword, dbName)
+    dal := models.InitDataAccessLayer(dbHost, dbPort, dbUser, dbPassword, dbName)
 
     // Create our app's models if they haven't been created previously.
-    dbInstance.CreateThingTable(false)
+    dal.CreateThingTable(false)
+	dal.CreateSensorTable(false)
+	dal.CreateTimeSeriesFloatDatumTable(false)
 
 	// Create our application instance.
  	return &MikaponicsThing{
 		webServerAddress: webServerAddress,
-		dal: dbInstance,
+		dal: dal,
 		grpcServer: nil,
 	}
 }
