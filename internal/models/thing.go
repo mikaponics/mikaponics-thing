@@ -31,9 +31,9 @@ func (dal *DataAccessLayer) CreateThingTable(dropExistingTable bool) {
         drop_stmt := "DROP TABLE things;"
         results, err := dal.db.Exec(drop_stmt)
         if err != nil {
-            fmt.Println("Thing Model dropped:", results, err)
+            fmt.Println("Thing table dropped with error:", results, err)
         } else {
-            fmt.Println("Thing Model dropped")
+            fmt.Println("Thing table dropped and re-created")
         }
     }
 
@@ -88,7 +88,7 @@ func (dal *DataAccessLayer) CreateThing(userId int64, name string, tenantId int6
     statement := `INSERT INTO things (user_id, name, tenant_id, created_at) VALUES ($1, $2, $3, $4)`
 
     now := time.Now()        // Current local time. (ex: 2009-11-10 23:00:00 +0000 UTC m=+0.000000000)
-    createdAt := now.Unix()  // Return the seconds. (ex: 1257894000)
+    createdAt := now.Unix()  // Number of seconds since January 1, 1970 UTC. (ex: 1257894000)
 
     // Step 2: Execute our SQL statement and either return our new user or
     //         our error.

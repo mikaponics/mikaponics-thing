@@ -4,33 +4,35 @@ package models  // github.com/mikaponics/mikapod-iam/internal/models
 import (
     "database/sql"
     "fmt"
+    "time"
 
-    "github.com/mikaponics/mikaponics-thing/internal/utils"
+    // "github.com/mikaponics/mikaponics-thing/internal/utils"
 )
 
 
 type Sensor struct {
-    TenantId          int64          `db:"tenant_id"`
-    TenantSchema      sql.NullString `db:"tenant_schema"`
     Id                int64          `db:"id"`
-    FirstName         sql.NullString `db:"first_name"`
-    LastName          sql.NullString `db:"last_name"`
-    PasswordHash      sql.NullString `db:"password_hash"`
-    Email             sql.NullString `db:"email"`
-    RoleId            uint8          `db:"role_id"`
+    TenantId          int64          `db:"tenant_id"`
+    ThingId           int64          `db:"thing_id"`
+    TypeId            uint8          `db:"type_id"`
+    CreatedAt         int64          `db:"created_at"`
 }
 
+/*
+ * typeId
+ * (1) Temperature
+ */
 
 // Special Thanks:
 // * https://jmoiron.github.io/sqlx/
 // * http://wysocki.in/golang-sqlx/
 
 /**
- *  Function will create the `users` table in the database.
+ *  Function will create the `sensors` table in the database.
  */
 func (dal *DataAccessLayer) CreateSensorTable(dropExistingTable bool) {
     if dropExistingTable {
-        drop_stmt := "DROP TABLE users;"
+        drop_stmt := "DROP TABLE sensors;"
         results, err := dal.db.Exec(drop_stmt)
         if err != nil {
             fmt.Println("Sensor Model:", results, err)
@@ -41,35 +43,34 @@ func (dal *DataAccessLayer) CreateSensorTable(dropExistingTable bool) {
     // * http://www.postgresqltutorial.com/postgresql-create-table/
     // * https://www.postgresql.org/docs/9.5/datatype.html
 
-    stmt := `CREATE TABLE users (
-        tenant_id bigint NOT NULL,
-        tenant_schema VARCHAR (127) NOT NULL,
+    stmt := `CREATE TABLE sensors (
         id bigserial PRIMARY KEY,
-        first_name VARCHAR (50) NOT NULL,
-        last_name VARCHAR (50) NOT NULL,
-        password_hash VARCHAR (511) NOT NULL,
-        email VARCHAR (255) UNIQUE NOT NULL,
-        role_id INT NOT NULL
+        tenant_id bigint NOT NULL,
+        thing_id bigint NOT NULL,
+        type_id INT NOT NULL,
+        created_at BIGINT NOT NULL
     );`
     results, err := dal.db.Exec(stmt)
     if err != nil {
-        fmt.Println("Sensor Model", results, err)
+        fmt.Println("Sensor table dropped with error", results, err)
+    } else {
+        fmt.Println("Sensor table dropped and re-created")
     }
     return
 }
 
 
 /**
- *  Function will return the `user` struct if it exists in the database or
+ *  Function will return the `sensor` struct if it exists in the database or
  *  return an error.
  */
-func (dal *DataAccessLayer) FindSensorByEmail(email string) (*Sensor, error) {
-    user := Sensor{} // The struct which will be populated from the database.
+func (dal *DataAccessLayer) GetSensorByTenantIdAndCreatedAt(tenantId int64, createdAt int64) (*Sensor, error) {
+    sensor := Sensor{} // The struct which will be populated from the database.
 
     // DEVELOPERS NOTE:
-    // (1) Lookup the user based on the email.
+    // (1) Lookup the sensor based on the email.
     // (2) PostgreSQL uses an enumerated $1, $2, etc bindvar syntax
-    err := dal.db.Get(&user, "SELECT * FROM users WHERE email = $1", email)
+    err := dal.db.Get(&sensor, "SELECT * FROM sensors WHERE tenant_id = $1 AND created_at = $2", tenantId, createdAt)
 
     // Handling non existing item
     if err == sql.ErrNoRows {
@@ -78,29 +79,28 @@ func (dal *DataAccessLayer) FindSensorByEmail(email string) (*Sensor, error) {
         return nil, err
     }
 
-    return &user, nil
+    return &sensor, nil
 }
 
 
 /**
- *  Function will create a user, if validation passess, and reutrns the `user`
+ *  Function will create a sensor, if validation passess, and reutrns the `sensor`
  *  struct else returns the error.
  */
-func (dal *DataAccessLayer) CreateSensor(email string, firstName string, lastName string, password string, tenantId int64, tenantSchema string, roleId int64) (*Sensor, error) {
-    // Step 1: Hash our user's password for added security or error on any condition.
-    passwordHash, err := utils.HashPassword(password)
-    if err != nil {
-        return nil, err
-    }
+func (dal *DataAccessLayer) CreateSensor(tenantId int64, thingId int64, typeId int64) (*Sensor, error) {
+    // Step 1: Generate SQL statement for creating a new `user` in `postgres`.
+    statement := `INSERT INTO sensors (tenant_id, thing_id, type_id, created_at) VALUES ($1, $2, $3, $4)`
 
-    // Step 2: Generate SQL statement for creating a new `user` in `postgres`.
-    statement := `INSERT INTO users (email, first_name, last_name, password_hash, tenant_id, tenant_schema, role_id) VALUES ($1, $2, $3, $4, $5, $6, $7)`
+    now := time.Now()        // Current local time. (ex: 2009-11-10 23:00:00 +0000 UTC m=+0.000000000)
+    createdAt := now.Unix()  // Number of seconds since January 1, 1970 UTC. (ex: 1257894000)
 
-    // Step 3: Execute our SQL statement and either return our new user or
+    // Step 2: Execute our SQL statement and either return our new user or
     //         our error.
-    _, err = dal.db.Exec(statement, email, firstName, lastName, passwordHash, tenantId, tenantSchema, roleId)
+    _, err := dal.db.Exec(statement, tenantId, thingId, typeId, createdAt)
     if err != nil {
         return nil, err
     }
-    return dal.FindSensorByEmail(email)
+
+    // Step 3:
+    return dal.GetSensorByTenantIdAndCreatedAt(tenantId, createdAt)
 }

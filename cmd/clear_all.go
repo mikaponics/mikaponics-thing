@@ -30,6 +30,7 @@ var clearAllCmd = &cobra.Command{
 
         // Drop our tables and recreate them as empty.
         dal.CreateThingTable(true)
+        dal.CreateSensorTable(true)
 
         fmt.Println("All data in database where cleared.")
     },
