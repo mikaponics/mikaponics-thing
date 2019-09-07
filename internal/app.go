@@ -27,7 +27,7 @@ func InitMikaponicsThing(dbHost, dbPort, dbUser, dbPassword, dbName, webServerAd
     // Create our app's models if they haven't been created previously.
     dal.CreateThingTable(false)
 	dal.CreateSensorTable(false)
-	dal.CreateTimeSeriesFloatDatumTable(false)
+	dal.CreateTimeSeriesDatumTable(false)
 
 	// Create our application instance.
  	return &MikaponicsThing{

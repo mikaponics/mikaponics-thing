@@ -9,32 +9,30 @@ import (
 )
 
 
-type TimeSeriesFloatDatum struct {
+type TimeSeriesDatum struct {
     Id                int64          `db:"id"`
     TenantId          int64          `db:"tenant_id"`
     SensorId          int64          `db:"sensor_id"`
-    value             float64        `db:"value"`
-    timestamp         int64          `db:"timestamp"`
+    Value             float64        `db:"value"`
+    Timestamp         int64          `db:"timestamp"`
 }
 
-/*
- * typeId
- * (1) Temperature
- */
 
 // Special Thanks:
 // * https://jmoiron.github.io/sqlx/
 // * http://wysocki.in/golang-sqlx/
 
 /**
- *  Function will create the `time series float data` table in the database.
+ *  Function will create the `data` table in the database.
  */
-func (dal *DataAccessLayer) CreateTimeSeriesFloatDatumTable(dropExistingTable bool) {
+func (dal *DataAccessLayer) CreateTimeSeriesDatumTable(dropExistingTable bool) {
     if dropExistingTable {
         drop_stmt := "DROP TABLE data;"
         results, err := dal.db.Exec(drop_stmt)
         if err != nil {
-            fmt.Println("TimeSeriesFloatDatum Model:", results, err)
+            fmt.Println("TimeSeriesDatum table dropped with error:", results, err)
+        } else {
+            fmt.Println("TimeSeriesDatum table dropped and re-created")
         }
     }
 
@@ -43,33 +41,31 @@ func (dal *DataAccessLayer) CreateTimeSeriesFloatDatumTable(dropExistingTable bo
     // * https://www.postgresql.org/docs/9.5/datatype.html
 
     stmt := `CREATE TABLE data (
-        id BIGSERIAL PRIMARY KEY,
-        tenant_id BIGINT NOT NULL,
+        id bigserial PRIMARY KEY,
+        tenant_id bigint NOT NULL,
         sensor_id BIGINT NOT NULL,
-        value DECIMAL NULL,
+        value FLOAT NULL,
         timestamp BIGINT NOT NULL
     );`
     results, err := dal.db.Exec(stmt)
     if err != nil {
-        fmt.Println("TimeSeriesFloatDatum table dropped with error", results, err)
-    } else {
-        fmt.Println("TimeSeriesFloatDatum table dropped and re-created")
+        fmt.Println("TimeSeriesDatum Model", results, err)
     }
     return
 }
 
 
 /**
- *  Function will return the `sensor` struct if it exists in the database or
+ *  Function will return the `thing` struct if it exists in the database or
  *  return an error.
  */
-func (dal *DataAccessLayer) GetTimeSeriesFloatDatumByTenantIdAndTimestamp(tenantId int64, timestamp int64) (*TimeSeriesFloatDatum, error) {
-    datum := TimeSeriesFloatDatum{} // The struct which will be populated from the database.
+func (dal *DataAccessLayer) GetTimeSeriesDatumByTenantIdAndCreatedAt(tenantId int64, timestamp int64) (*TimeSeriesDatum, error) {
+    thing := TimeSeriesDatum{} // The struct which will be populated from the database.
 
     // DEVELOPERS NOTE:
-    // (1) Lookup the datum based on the email.
+    // (1) Lookup the thing based on the id.
     // (2) PostgreSQL uses an enumerated $1, $2, etc bindvar syntax
-    err := dal.db.Get(&datum, "SELECT * FROM data WHERE tenant_id = $1 AND timestamp = $2 LIMIT 1", tenantId, timestamp)
+    err := dal.db.Get(&thing, "SELECT * FROM data WHERE timestamp = $1 AND tenant_id = $2", timestamp, tenantId)
 
     // Handling non existing item
     if err == sql.ErrNoRows {
@@ -78,15 +74,15 @@ func (dal *DataAccessLayer) GetTimeSeriesFloatDatumByTenantIdAndTimestamp(tenant
         return nil, err
     }
 
-    return &datum, nil
+    return &thing, nil
 }
 
 
 /**
- *  Function will create a datum, if validation passess, and reutrns the `datum`
+ *  Function will create a thing, if validation passess, and reutrns the `thing`
  *  struct else returns the error.
  */
-func (dal *DataAccessLayer) CreateTimeSeriesFloatDatum(tenantId int64, sensorId int64, value float64, timestamp int64) (*TimeSeriesFloatDatum, error) {
+func (dal *DataAccessLayer) CreateTimeSeriesDatum(tenantId int64, sensorId int64, value float64, timestamp int64) (*TimeSeriesDatum, error) {
     // Step 1: Generate SQL statement for creating a new `user` in `postgres`.
     statement := `INSERT INTO data (tenant_id, sensor_id, value, timestamp) VALUES ($1, $2, $3, $4)`
 
@@ -98,5 +94,5 @@ func (dal *DataAccessLayer) CreateTimeSeriesFloatDatum(tenantId int64, sensorId 
     }
 
     // Step 3:
-    return dal.GetTimeSeriesFloatDatumByTenantIdAndTimestamp(tenantId, timestamp)
+    return dal.GetTimeSeriesDatumByTenantIdAndCreatedAt(tenantId, timestamp)
 }

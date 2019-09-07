@@ -16,7 +16,7 @@ func init() {
 }
 
 var createFloatDatumCmd = &cobra.Command{
-    Use:   "create_float_datum [FIELDS]",
+    Use:   "create_datum [FIELDS]",
     Short: "Create time-series (float) datum.",
     Long:  `Command used to create a single time series (float) datum for the particular sensor.`,
     Args: func(cmd *cobra.Command, args []string) error {
@@ -50,9 +50,9 @@ var createFloatDatumCmd = &cobra.Command{
 
         dal.CreateThingTable(false)
         dal.CreateSensorTable(false)
-        dal.CreateTimeSeriesFloatDatumTable(false)
+        dal.CreateTimeSeriesDatumTable(false)
 
-        datum, err := dal.CreateTimeSeriesFloatDatum(tenantId, sensorId, value, timestamp)
+        datum, err := dal.CreateTimeSeriesDatum(tenantId, sensorId, value, timestamp)
         if err != nil {
             fmt.Println("Failed creating time-series (float) datum!")
             fmt.Println(err)
