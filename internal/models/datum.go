@@ -45,7 +45,8 @@ func (dal *DataAccessLayer) CreateTimeSeriesDatumTable(dropExistingTable bool) {
         tenant_id bigint NOT NULL,
         sensor_id BIGINT NOT NULL,
         value FLOAT NULL,
-        timestamp BIGINT NOT NULL
+        timestamp BIGINT NOT NULL,
+        unique (tenant_id, sensor_id, timestamp)
     );`
     results, err := dal.db.Exec(stmt)
     if err != nil {
