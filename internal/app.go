@@ -25,7 +25,7 @@ func InitMikaponicsThing(dbHost, dbPort, dbUser, dbPassword, dbName, webServerAd
     dbInstance := models.InitDataAccessLayer(dbHost, dbPort, dbUser, dbPassword, dbName)
 
     // Create our app's models if they haven't been created previously.
-    dbInstance.CreateUserTable(false)
+    dbInstance.CreateThingTable(true)
 
 	// Create our application instance.
  	return &MikaponicsThing{
