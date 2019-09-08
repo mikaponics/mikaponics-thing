@@ -23,7 +23,7 @@ service MikaponicsThing {
 message SetTimeSeriesDatumRequest {
     int64 tenant_id = 1;
     int64 sensor_id = 2;
-    float value = 3;
+    double value = 3;
     google.protobuf.Timestamp timestamp = 4;
 }
 
