@@ -12,34 +12,19 @@ import "google/protobuf/timestamp.proto";
 // $ protoc --go_out=plugins=grpc:. api/thing.proto
 
 service MikaponicsThing {
-    rpc SetTimeSeriesDatum (SetTimeSeriesDatumRequest) returns (SetTimeSeriesDatumResponse) {}
     rpc SetTimeSeriesData (SetTimeSeriesDataRequest) returns (SetTimeSeriesDataResponse) {}
     rpc SetSensor (SetSensorRequest) returns (SetSensorResponse) {}
     rpc SetThing (SetThingRequest) returns (SetThingResponse) {}
     // https://grpc.io/docs/tutorials/basic/go/
 }
 
-// --- SetTimeSeriesDatum ---
-
-message SetTimeSeriesDatumRequest {
-    int64 tenant_id = 1;
-    int64 sensor_id = 2;
-    float value = 3;
-    google.protobuf.Timestamp timestamp = 4;
-}
-
-message SetTimeSeriesDatumResponse {
-    bool status = 1;
-    string message = 2;
-}
-
 // --- SetTimeSeriesData ---
 
 message SetTimeSeriesDataRequest {
-    repeated TimeSeriesDatum data = 1;
+    repeated TimeSeriesDatumRequest data = 1;
 }
 
-message TimeSeriesDatum {
+message TimeSeriesDatumRequest {
     int64 tenant_id = 1;
     int32 sensor_id = 2;
     float value = 3;
