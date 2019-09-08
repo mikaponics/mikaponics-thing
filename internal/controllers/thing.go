@@ -9,7 +9,7 @@ import (
 	pb "github.com/mikaponics/mikaponics-thing/api"
 )
 
-func (s *MikaponicsRPC) SetThing(ctx context.Context, in *pb.SetThingRequest) (*pb.SetThingResponse, error) {
+func (s *MikaponicsThingServer) SetThing(ctx context.Context, in *pb.SetThingRequest) (*pb.SetThingResponse, error) {
 	return &pb.SetThingResponse{
 		Message: "Thing was created",
 		Status: true,

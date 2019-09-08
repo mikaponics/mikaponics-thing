@@ -9,7 +9,7 @@ import (
 	pb "github.com/mikaponics/mikaponics-thing/api"
 )
 
-func (s *MikaponicsRPC) SetSensor(ctx context.Context, in *pb.SetSensorRequest) (*pb.SetSensorResponse, error) {
+func (s *MikaponicsThingServer) SetSensor(ctx context.Context, in *pb.SetSensorRequest) (*pb.SetSensorResponse, error) {
 	return &pb.SetSensorResponse{
 		Message: "Sensor was created",
 		Status: true,
