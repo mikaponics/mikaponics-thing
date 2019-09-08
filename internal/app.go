@@ -48,7 +48,7 @@ func (app *MikaponicsThing) RunMainRuntimeLoop() {
     }
 
     // Initialize our gRPC server using our TCP server.
-    grpcServer := grpc.NewServer()
+    grpcServer := grpc.NewServer( grpc.UnaryInterceptor(unaryInterceptor), ) // EX: Added `UnaryInterceptor`.
 
     // Save reference to our application state.
     app.grpcServer = grpcServer
