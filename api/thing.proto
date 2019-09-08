@@ -20,15 +20,15 @@ service MikaponicsThing {
 
 // --- SetTimeSeriesData ---
 
-message SetTimeSeriesDataRequest {
-    repeated TimeSeriesDatumRequest data = 1;
-}
-
-message TimeSeriesDatumRequest {
+message SetTimeSeriesDatumRequest {
     int64 tenant_id = 1;
     int32 sensor_id = 2;
     float value = 3;
     google.protobuf.Timestamp timestamp = 4;
+}
+
+message SetTimeSeriesDataRequest {
+    repeated SetTimeSeriesDatumRequest data = 1;
 }
 
 message SetTimeSeriesDataResponse {
