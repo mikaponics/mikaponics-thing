@@ -135,6 +135,155 @@ func (m *SetTimeSeriesDatumResponse) GetMessage() string {
 	return ""
 }
 
+type SetTimeSeriesDataRequest struct {
+	Data                 []*TimeSeriesDatum `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
+}
+
+func (m *SetTimeSeriesDataRequest) Reset()         { *m = SetTimeSeriesDataRequest{} }
+func (m *SetTimeSeriesDataRequest) String() string { return proto.CompactTextString(m) }
+func (*SetTimeSeriesDataRequest) ProtoMessage()    {}
+func (*SetTimeSeriesDataRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_98595d89877c392b, []int{2}
+}
+
+func (m *SetTimeSeriesDataRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_SetTimeSeriesDataRequest.Unmarshal(m, b)
+}
+func (m *SetTimeSeriesDataRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_SetTimeSeriesDataRequest.Marshal(b, m, deterministic)
+}
+func (m *SetTimeSeriesDataRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SetTimeSeriesDataRequest.Merge(m, src)
+}
+func (m *SetTimeSeriesDataRequest) XXX_Size() int {
+	return xxx_messageInfo_SetTimeSeriesDataRequest.Size(m)
+}
+func (m *SetTimeSeriesDataRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_SetTimeSeriesDataRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SetTimeSeriesDataRequest proto.InternalMessageInfo
+
+func (m *SetTimeSeriesDataRequest) GetData() []*TimeSeriesDatum {
+	if m != nil {
+		return m.Data
+	}
+	return nil
+}
+
+type TimeSeriesDatum struct {
+	TenantId             int64                `protobuf:"varint,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	SensorId             int32                `protobuf:"varint,2,opt,name=sensor_id,json=sensorId,proto3" json:"sensor_id,omitempty"`
+	Value                float32              `protobuf:"fixed32,3,opt,name=value,proto3" json:"value,omitempty"`
+	Timestamp            *timestamp.Timestamp `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
+}
+
+func (m *TimeSeriesDatum) Reset()         { *m = TimeSeriesDatum{} }
+func (m *TimeSeriesDatum) String() string { return proto.CompactTextString(m) }
+func (*TimeSeriesDatum) ProtoMessage()    {}
+func (*TimeSeriesDatum) Descriptor() ([]byte, []int) {
+	return fileDescriptor_98595d89877c392b, []int{3}
+}
+
+func (m *TimeSeriesDatum) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TimeSeriesDatum.Unmarshal(m, b)
+}
+func (m *TimeSeriesDatum) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TimeSeriesDatum.Marshal(b, m, deterministic)
+}
+func (m *TimeSeriesDatum) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TimeSeriesDatum.Merge(m, src)
+}
+func (m *TimeSeriesDatum) XXX_Size() int {
+	return xxx_messageInfo_TimeSeriesDatum.Size(m)
+}
+func (m *TimeSeriesDatum) XXX_DiscardUnknown() {
+	xxx_messageInfo_TimeSeriesDatum.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TimeSeriesDatum proto.InternalMessageInfo
+
+func (m *TimeSeriesDatum) GetTenantId() int64 {
+	if m != nil {
+		return m.TenantId
+	}
+	return 0
+}
+
+func (m *TimeSeriesDatum) GetSensorId() int32 {
+	if m != nil {
+		return m.SensorId
+	}
+	return 0
+}
+
+func (m *TimeSeriesDatum) GetValue() float32 {
+	if m != nil {
+		return m.Value
+	}
+	return 0
+}
+
+func (m *TimeSeriesDatum) GetTimestamp() *timestamp.Timestamp {
+	if m != nil {
+		return m.Timestamp
+	}
+	return nil
+}
+
+type SetTimeSeriesDataResponse struct {
+	Status               bool     `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SetTimeSeriesDataResponse) Reset()         { *m = SetTimeSeriesDataResponse{} }
+func (m *SetTimeSeriesDataResponse) String() string { return proto.CompactTextString(m) }
+func (*SetTimeSeriesDataResponse) ProtoMessage()    {}
+func (*SetTimeSeriesDataResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_98595d89877c392b, []int{4}
+}
+
+func (m *SetTimeSeriesDataResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_SetTimeSeriesDataResponse.Unmarshal(m, b)
+}
+func (m *SetTimeSeriesDataResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_SetTimeSeriesDataResponse.Marshal(b, m, deterministic)
+}
+func (m *SetTimeSeriesDataResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SetTimeSeriesDataResponse.Merge(m, src)
+}
+func (m *SetTimeSeriesDataResponse) XXX_Size() int {
+	return xxx_messageInfo_SetTimeSeriesDataResponse.Size(m)
+}
+func (m *SetTimeSeriesDataResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_SetTimeSeriesDataResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SetTimeSeriesDataResponse proto.InternalMessageInfo
+
+func (m *SetTimeSeriesDataResponse) GetStatus() bool {
+	if m != nil {
+		return m.Status
+	}
+	return false
+}
+
+func (m *SetTimeSeriesDataResponse) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
 type SetSensorRequest struct {
 	TenantId             int64    `protobuf:"varint,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
 	ThingId              int64    `protobuf:"varint,2,opt,name=thing_id,json=thingId,proto3" json:"thing_id,omitempty"`
@@ -148,7 +297,7 @@ func (m *SetSensorRequest) Reset()         { *m = SetSensorRequest{} }
 func (m *SetSensorRequest) String() string { return proto.CompactTextString(m) }
 func (*SetSensorRequest) ProtoMessage()    {}
 func (*SetSensorRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_98595d89877c392b, []int{2}
+	return fileDescriptor_98595d89877c392b, []int{5}
 }
 
 func (m *SetSensorRequest) XXX_Unmarshal(b []byte) error {
@@ -202,7 +351,7 @@ func (m *SetSensorResponse) Reset()         { *m = SetSensorResponse{} }
 func (m *SetSensorResponse) String() string { return proto.CompactTextString(m) }
 func (*SetSensorResponse) ProtoMessage()    {}
 func (*SetSensorResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_98595d89877c392b, []int{3}
+	return fileDescriptor_98595d89877c392b, []int{6}
 }
 
 func (m *SetSensorResponse) XXX_Unmarshal(b []byte) error {
@@ -250,7 +399,7 @@ func (m *SetThingRequest) Reset()         { *m = SetThingRequest{} }
 func (m *SetThingRequest) String() string { return proto.CompactTextString(m) }
 func (*SetThingRequest) ProtoMessage()    {}
 func (*SetThingRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_98595d89877c392b, []int{4}
+	return fileDescriptor_98595d89877c392b, []int{7}
 }
 
 func (m *SetThingRequest) XXX_Unmarshal(b []byte) error {
@@ -304,7 +453,7 @@ func (m *SetThingResponse) Reset()         { *m = SetThingResponse{} }
 func (m *SetThingResponse) String() string { return proto.CompactTextString(m) }
 func (*SetThingResponse) ProtoMessage()    {}
 func (*SetThingResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_98595d89877c392b, []int{5}
+	return fileDescriptor_98595d89877c392b, []int{8}
 }
 
 func (m *SetThingResponse) XXX_Unmarshal(b []byte) error {
@@ -342,6 +491,9 @@ func (m *SetThingResponse) GetMessage() string {
 func init() {
 	proto.RegisterType((*SetTimeSeriesDatumRequest)(nil), "api.SetTimeSeriesDatumRequest")
 	proto.RegisterType((*SetTimeSeriesDatumResponse)(nil), "api.SetTimeSeriesDatumResponse")
+	proto.RegisterType((*SetTimeSeriesDataRequest)(nil), "api.SetTimeSeriesDataRequest")
+	proto.RegisterType((*TimeSeriesDatum)(nil), "api.TimeSeriesDatum")
+	proto.RegisterType((*SetTimeSeriesDataResponse)(nil), "api.SetTimeSeriesDataResponse")
 	proto.RegisterType((*SetSensorRequest)(nil), "api.SetSensorRequest")
 	proto.RegisterType((*SetSensorResponse)(nil), "api.SetSensorResponse")
 	proto.RegisterType((*SetThingRequest)(nil), "api.SetThingRequest")
@@ -351,32 +503,36 @@ func init() {
 func init() { proto.RegisterFile("api/thing.proto", fileDescriptor_98595d89877c392b) }
 
 var fileDescriptor_98595d89877c392b = []byte{
-	// 392 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x92, 0x3d, 0xcf, 0xd3, 0x30,
-	0x10, 0xc7, 0xc9, 0xd3, 0xa7, 0x79, 0x39, 0x86, 0x82, 0xd5, 0x97, 0x34, 0x48, 0xb4, 0xca, 0xd4,
-	0x29, 0x95, 0xca, 0x02, 0x12, 0x63, 0x19, 0x32, 0xc0, 0xe0, 0x54, 0x62, 0x60, 0x40, 0x6e, 0x73,
-	0x04, 0x8b, 0x26, 0x31, 0xb5, 0x83, 0xc4, 0x07, 0xe2, 0x93, 0xf1, 0x45, 0x90, 0xed, 0x26, 0x2d,
-	0x85, 0x4a, 0x55, 0x37, 0xff, 0xef, 0xce, 0xbe, 0xdf, 0xff, 0xce, 0x30, 0x60, 0x82, 0x2f, 0xd5,
-	0x57, 0x5e, 0x15, 0x89, 0x38, 0xd4, 0xaa, 0x26, 0x3d, 0x26, 0x78, 0x34, 0x2b, 0xea, 0xba, 0xd8,
-	0xe3, 0xd2, 0x84, 0xb6, 0xcd, 0x97, 0xa5, 0xe2, 0x25, 0x4a, 0xc5, 0x4a, 0x61, 0xab, 0xe2, 0x5f,
-	0x0e, 0x4c, 0x33, 0x54, 0x1b, 0x5e, 0x62, 0x86, 0x07, 0x8e, 0x72, 0xcd, 0x54, 0x53, 0x52, 0xfc,
-	0xde, 0xa0, 0x54, 0xe4, 0x05, 0x04, 0x0a, 0x2b, 0x56, 0xa9, 0xcf, 0x3c, 0x0f, 0x9d, 0xb9, 0xb3,
-	0xe8, 0x51, 0xdf, 0x06, 0xd2, 0x5c, 0x27, 0x25, 0x56, 0xb2, 0x3e, 0xe8, 0xe4, 0x83, 0x4d, 0xda,
-	0x40, 0x9a, 0x93, 0x21, 0xf4, 0x7f, 0xb0, 0x7d, 0x83, 0x61, 0x6f, 0xee, 0x2c, 0x1e, 0xa8, 0x15,
-	0xe4, 0x35, 0x04, 0x1d, 0x40, 0xf8, 0x38, 0x77, 0x16, 0x4f, 0x57, 0x51, 0x62, 0x11, 0x93, 0x16,
-	0x31, 0xd9, 0xb4, 0x15, 0xf4, 0x54, 0x1c, 0x7f, 0x80, 0xe8, 0x7f, 0x98, 0x52, 0xd4, 0x95, 0x44,
-	0x32, 0x06, 0x57, 0x2a, 0xa6, 0x1a, 0x69, 0x20, 0x7d, 0x7a, 0x54, 0x24, 0x04, 0xaf, 0x44, 0x29,
-	0x59, 0x81, 0x06, 0x30, 0xa0, 0xad, 0x8c, 0x77, 0xf0, 0x2c, 0x43, 0x95, 0x19, 0xdc, 0x9b, 0xdc,
-	0x4e, 0xc1, 0x37, 0xd3, 0x3d, 0x99, 0xf5, 0x8c, 0x4e, 0x73, 0x32, 0x01, 0x4f, 0xfd, 0x14, 0xa8,
-	0x33, 0xda, 0x6d, 0x9f, 0xba, 0x5a, 0xa6, 0x79, 0xfc, 0x0e, 0x9e, 0x9f, 0x35, 0xb9, 0x9b, 0xf5,
-	0x13, 0x0c, 0xb4, 0x77, 0xdd, 0xed, 0x26, 0xd4, 0x09, 0x78, 0x8d, 0xc4, 0xb3, 0xb5, 0xb8, 0x5a,
-	0xa6, 0x39, 0x21, 0xf0, 0x58, 0xb1, 0xd2, 0xee, 0x24, 0xa0, 0xe6, 0x1c, 0xaf, 0xcd, 0x20, 0x8e,
-	0x8f, 0xdf, 0x8b, 0xb8, 0xfa, 0xed, 0xc0, 0xe0, 0x3d, 0xff, 0xc6, 0x44, 0x5d, 0xf1, 0x9d, 0x34,
-	0xaf, 0x91, 0x8f, 0x40, 0xfe, 0x5d, 0x19, 0x79, 0x99, 0x30, 0xc1, 0x93, 0xab, 0x5f, 0x2e, 0x9a,
-	0x5d, 0xcd, 0x5b, 0xb8, 0xf8, 0x09, 0x79, 0x0b, 0x41, 0x37, 0x56, 0x32, 0x6a, 0xeb, 0xff, 0xda,
-	0x65, 0x34, 0xbe, 0x0c, 0x77, 0xb7, 0xdf, 0x80, 0xdf, 0x1a, 0x26, 0xc3, 0xae, 0xd9, 0xd9, 0x70,
-	0xa3, 0xd1, 0x45, 0xb4, 0xbd, 0xba, 0x75, 0xcd, 0x1f, 0x7d, 0xf5, 0x27, 0x00, 0x00, 0xff, 0xff,
-	0xae, 0x0e, 0x46, 0x7e, 0x6c, 0x03, 0x00, 0x00,
+	// 458 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x53, 0x4d, 0x6f, 0xd3, 0x40,
+	0x10, 0xc5, 0x71, 0x9a, 0xc4, 0xd3, 0x43, 0x60, 0x94, 0xb6, 0xae, 0x11, 0x6d, 0xe4, 0x93, 0x4f,
+	0x8e, 0x14, 0x2e, 0x20, 0x71, 0x0c, 0x07, 0x1f, 0xca, 0xc1, 0x8e, 0xc4, 0x81, 0x03, 0xda, 0xd6,
+	0x83, 0x59, 0x51, 0xdb, 0x4b, 0x76, 0x8d, 0xc4, 0x6f, 0xe1, 0xcc, 0x8f, 0xe0, 0xdf, 0x21, 0xef,
+	0x76, 0xdd, 0xd4, 0x6d, 0xa4, 0x12, 0xd4, 0x9b, 0x67, 0xde, 0x7c, 0x3c, 0xbf, 0x79, 0x0b, 0x53,
+	0x26, 0xf8, 0x42, 0x7d, 0xe5, 0x55, 0x11, 0x8b, 0x4d, 0xad, 0x6a, 0x74, 0x99, 0xe0, 0xc1, 0x79,
+	0x51, 0xd7, 0xc5, 0x35, 0x2d, 0x74, 0xea, 0xb2, 0xf9, 0xb2, 0x50, 0xbc, 0x24, 0xa9, 0x58, 0x29,
+	0x4c, 0x55, 0xf8, 0xdb, 0x81, 0xd3, 0x8c, 0xd4, 0x9a, 0x97, 0x94, 0xd1, 0x86, 0x93, 0x5c, 0x31,
+	0xd5, 0x94, 0x29, 0x7d, 0x6f, 0x48, 0x2a, 0x7c, 0x09, 0x9e, 0xa2, 0x8a, 0x55, 0xea, 0x33, 0xcf,
+	0x7d, 0x67, 0xee, 0x44, 0x6e, 0x3a, 0x31, 0x89, 0x24, 0x6f, 0x41, 0x49, 0x95, 0xac, 0x37, 0x2d,
+	0x38, 0x30, 0xa0, 0x49, 0x24, 0x39, 0xce, 0xe0, 0xe0, 0x07, 0xbb, 0x6e, 0xc8, 0x77, 0xe7, 0x4e,
+	0x34, 0x48, 0x4d, 0x80, 0x6f, 0xc0, 0xeb, 0x08, 0xf8, 0xc3, 0xb9, 0x13, 0x1d, 0x2e, 0x83, 0xd8,
+	0x50, 0x8c, 0x2d, 0xc5, 0x78, 0x6d, 0x2b, 0xd2, 0xdb, 0xe2, 0xf0, 0x03, 0x04, 0x0f, 0xd1, 0x94,
+	0xa2, 0xae, 0x24, 0xe1, 0x31, 0x8c, 0xa4, 0x62, 0xaa, 0x91, 0x9a, 0xe4, 0x24, 0xbd, 0x89, 0xd0,
+	0x87, 0x71, 0x49, 0x52, 0xb2, 0x82, 0x34, 0x41, 0x2f, 0xb5, 0x61, 0xb8, 0x02, 0xbf, 0x3f, 0x8f,
+	0xd9, 0xbf, 0x8e, 0x60, 0x98, 0x33, 0xc5, 0x7c, 0x67, 0xee, 0x46, 0x87, 0xcb, 0x59, 0xcc, 0x04,
+	0x8f, 0xfb, 0x9b, 0x75, 0x45, 0xf8, 0xcb, 0x81, 0x69, 0x0f, 0xf9, 0x47, 0xcd, 0x0e, 0x9e, 0x50,
+	0xb3, 0x8b, 0xfb, 0xa7, 0x65, 0xff, 0x21, 0xd9, 0x15, 0x3c, 0xcf, 0x48, 0x65, 0x9a, 0xed, 0xa3,
+	0x0c, 0x72, 0x0a, 0x13, 0x6d, 0xc8, 0x5b, 0x7f, 0x8c, 0x75, 0x9c, 0xe4, 0x78, 0x02, 0x63, 0xf5,
+	0x53, 0x50, 0x8b, 0xb8, 0x5a, 0x85, 0x51, 0x1b, 0x26, 0x79, 0xf8, 0x1e, 0x5e, 0x6c, 0x2d, 0xd9,
+	0x9b, 0xeb, 0x27, 0x98, 0xb6, 0xbf, 0xde, 0x6e, 0x7b, 0x14, 0xd5, 0x13, 0x18, 0x37, 0x92, 0xb6,
+	0x9c, 0x3c, 0x6a, 0xc3, 0x24, 0x47, 0x84, 0x61, 0xc5, 0x4a, 0x73, 0x12, 0x2f, 0xd5, 0xdf, 0xe1,
+	0x4a, 0x0b, 0x71, 0x33, 0x7c, 0x5f, 0x8a, 0xcb, 0x3f, 0x03, 0x98, 0x5e, 0xf0, 0x6f, 0x4c, 0xd4,
+	0x15, 0xbf, 0x92, 0x7a, 0x1a, 0x7e, 0x04, 0xbc, 0xef, 0x72, 0x3c, 0xd3, 0x0e, 0xdc, 0xf9, 0x4a,
+	0x83, 0xf3, 0x9d, 0xb8, 0x21, 0x17, 0x3e, 0xc3, 0xb5, 0x96, 0xf5, 0xae, 0x15, 0xf0, 0xd5, 0x83,
+	0x7d, 0xf6, 0x19, 0x04, 0x67, 0xbb, 0xe0, 0x6e, 0xea, 0x3b, 0xf0, 0xba, 0x63, 0xe1, 0x91, 0x2d,
+	0xbf, 0xe3, 0x90, 0xe0, 0xb8, 0x9f, 0xee, 0xba, 0xdf, 0xc2, 0xc4, 0xca, 0x88, 0xb3, 0x6e, 0xd7,
+	0xd6, 0xc9, 0x82, 0xa3, 0x5e, 0xd6, 0xb6, 0x5e, 0x8e, 0xb4, 0xf1, 0x5f, 0xff, 0x0d, 0x00, 0x00,
+	0xff, 0xff, 0x6a, 0xf5, 0xa8, 0xda, 0xf5, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -392,6 +548,7 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MikaponicsThingClient interface {
 	SetTimeSeriesDatum(ctx context.Context, in *SetTimeSeriesDatumRequest, opts ...grpc.CallOption) (*SetTimeSeriesDatumResponse, error)
+	SetTimeSeriesData(ctx context.Context, in *SetTimeSeriesDataRequest, opts ...grpc.CallOption) (*SetTimeSeriesDataResponse, error)
 	SetSensor(ctx context.Context, in *SetSensorRequest, opts ...grpc.CallOption) (*SetSensorResponse, error)
 	SetThing(ctx context.Context, in *SetThingRequest, opts ...grpc.CallOption) (*SetThingResponse, error)
 }
@@ -407,6 +564,15 @@ func NewMikaponicsThingClient(cc *grpc.ClientConn) MikaponicsThingClient {
 func (c *mikaponicsThingClient) SetTimeSeriesDatum(ctx context.Context, in *SetTimeSeriesDatumRequest, opts ...grpc.CallOption) (*SetTimeSeriesDatumResponse, error) {
 	out := new(SetTimeSeriesDatumResponse)
 	err := c.cc.Invoke(ctx, "/api.MikaponicsThing/SetTimeSeriesDatum", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *mikaponicsThingClient) SetTimeSeriesData(ctx context.Context, in *SetTimeSeriesDataRequest, opts ...grpc.CallOption) (*SetTimeSeriesDataResponse, error) {
+	out := new(SetTimeSeriesDataResponse)
+	err := c.cc.Invoke(ctx, "/api.MikaponicsThing/SetTimeSeriesData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -434,6 +600,7 @@ func (c *mikaponicsThingClient) SetThing(ctx context.Context, in *SetThingReques
 // MikaponicsThingServer is the server API for MikaponicsThing service.
 type MikaponicsThingServer interface {
 	SetTimeSeriesDatum(context.Context, *SetTimeSeriesDatumRequest) (*SetTimeSeriesDatumResponse, error)
+	SetTimeSeriesData(context.Context, *SetTimeSeriesDataRequest) (*SetTimeSeriesDataResponse, error)
 	SetSensor(context.Context, *SetSensorRequest) (*SetSensorResponse, error)
 	SetThing(context.Context, *SetThingRequest) (*SetThingResponse, error)
 }
@@ -444,6 +611,9 @@ type UnimplementedMikaponicsThingServer struct {
 
 func (*UnimplementedMikaponicsThingServer) SetTimeSeriesDatum(ctx context.Context, req *SetTimeSeriesDatumRequest) (*SetTimeSeriesDatumResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetTimeSeriesDatum not implemented")
+}
+func (*UnimplementedMikaponicsThingServer) SetTimeSeriesData(ctx context.Context, req *SetTimeSeriesDataRequest) (*SetTimeSeriesDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetTimeSeriesData not implemented")
 }
 func (*UnimplementedMikaponicsThingServer) SetSensor(ctx context.Context, req *SetSensorRequest) (*SetSensorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetSensor not implemented")
@@ -470,6 +640,24 @@ func _MikaponicsThing_SetTimeSeriesDatum_Handler(srv interface{}, ctx context.Co
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MikaponicsThingServer).SetTimeSeriesDatum(ctx, req.(*SetTimeSeriesDatumRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MikaponicsThing_SetTimeSeriesData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetTimeSeriesDataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MikaponicsThingServer).SetTimeSeriesData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.MikaponicsThing/SetTimeSeriesData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MikaponicsThingServer).SetTimeSeriesData(ctx, req.(*SetTimeSeriesDataRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -517,6 +705,10 @@ var _MikaponicsThing_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetTimeSeriesDatum",
 			Handler:    _MikaponicsThing_SetTimeSeriesDatum_Handler,
+		},
+		{
+			MethodName: "SetTimeSeriesData",
+			Handler:    _MikaponicsThing_SetTimeSeriesData_Handler,
 		},
 		{
 			MethodName: "SetSensor",
