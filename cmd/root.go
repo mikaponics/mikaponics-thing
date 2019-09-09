@@ -22,10 +22,11 @@ var rootCmd = &cobra.Command{
         dbUser := os.Getenv("MIKAPONICS_THING_DB_USER")
         dbPassword := os.Getenv("MIKAPONICS_THING_DB_PASSWORD")
         dbName := os.Getenv("MIKAPONICS_THING_DB_NAME")
-        webServerAddress := os.Getenv("MIKAPONICS_THING_APP_ADDRESS")
+        thingAddress := os.Getenv("MIKAPONICS_THING_APP_ADDRESS")
+        iamAddress := os.Getenv("MIKAPONICS_THING_APP_IAM_ADDRESS")
 
         // Initialize our application.
-        app := internal.InitMikaponicsThing(dbHost, dbPort, dbUser, dbPassword, dbName, webServerAddress)
+        app := internal.InitMikaponicsThing(dbHost, dbPort, dbUser, dbPassword, dbName, thingAddress, iamAddress)
 
         // DEVELOPERS CODE:
     	// The following code will create an anonymous goroutine which will have a

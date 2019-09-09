@@ -14,14 +14,14 @@ import (
 )
 
 type MikaponicsThing struct {
-	webServerAddress string
+	thingAddress string
 	dal *models.DataAccessLayer
 	iam *services.IAMClient
 	grpcServer *grpc.Server
 }
 
 // Function will construct the Mikapod IAM application.
-func InitMikaponicsThing(dbHost, dbPort, dbUser, dbPassword, dbName, webServerAddress string) (*MikaponicsThing) {
+func InitMikaponicsThing(dbHost, dbPort, dbUser, dbPassword, dbName, thingAddress string, iamAddress string) (*MikaponicsThing) {
 
 	// Initialize and connect our database layer for the entire application.
     dal := models.InitDataAccessLayer(dbHost, dbPort, dbUser, dbPassword, dbName)
@@ -31,12 +31,12 @@ func InitMikaponicsThing(dbHost, dbPort, dbUser, dbPassword, dbName, webServerAd
 	dal.CreateSensorTable(false)
 	dal.CreateTimeSeriesDatumTable(false)
 
-    iamAddress := "127.0.0.1:8000"
+    // Initialize our IAM client.
 	iam := services.InitIAMClient(iamAddress)
 
 	// Create our application instance.
  	return &MikaponicsThing{
-		webServerAddress: webServerAddress,
+		thingAddress: thingAddress,
 		dal: dal,
 		iam: iam,
 		grpcServer: nil,
@@ -48,7 +48,7 @@ func InitMikaponicsThing(dbHost, dbPort, dbUser, dbPassword, dbName, webServerAd
 func (app *MikaponicsThing) RunMainRuntimeLoop() {
 	// Open a TCP server to the specified localhost and environment variable
     // specified port number.
-    lis, err := net.Listen("tcp", app.webServerAddress)
+    lis, err := net.Listen("tcp", app.thingAddress)
     if err != nil {
         log.Fatalf("failed to listen: %v", err)
     }
