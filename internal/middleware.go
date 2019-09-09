@@ -19,40 +19,36 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-
-// valid validates the authorization.
-func valid(authorization []string) bool {
-	if len(authorization) < 1 {
-		return false
-	}
-	token := strings.TrimPrefix(authorization[0], "Bearer ")
-
-	log.Printf("%v", token) // For debugging purposes only
-
-	// // Perform the token validation here. For the sake of this example, the code
-	// // here forgoes any of the usual OAuth2 token validation and instead checks
-	// // for a token matching an arbitrary string.
-	// return token == "bearer 1234567890"
-	return true //TODO: IMPLEMENT FIX
-}
-
-
+/**
+ *  The purpose of this interceptor is to make sure we extract the
+ *  token string from the authorization metadata and save it to our context
+ *  before any function gets called in our server.
+ */
 func unaryInterceptor(
 	ctx context.Context,
 	req interface{},
 	info *grpc.UnaryServerInfo,
 	handler grpc.UnaryHandler,
 ) (interface{}, error) {
+	// Extract our metadata from our incoming context.
 	md, ok := metadata.FromIncomingContext(ctx)
-
 	if !ok {
 		return nil, status.Errorf(codes.InvalidArgument, "missing metadata")
 	}
 
-	if !valid(md["authorization"]) {
+    // Confirm an authorization metadata was included else error.
+	authorization := md["authorization"]
+	if len(authorization) < 1 {
 		return nil, status.Errorf(codes.Unauthenticated, "invalid token")
 	}
 
+    // Extract our token.
+	tokenWithBearer := strings.TrimPrefix(authorization[0], "Bearer ")
+	token := strings.Replace(tokenWithBearer, "bearer ", "", -1)
+
+	// Attach our `token` string to our context so when any function runs,
+	// it will have already our token string.
+	ctx = context.WithValue(ctx, "Token", token)
 	m, err := handler(ctx, req)
 	if err != nil {
 		log.Fatalf("RPC failed to serve: %v", err)

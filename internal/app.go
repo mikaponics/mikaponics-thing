@@ -8,6 +8,7 @@ import (
 
 	pb "github.com/mikaponics/mikaponics-thing/api"
 
+    "github.com/mikaponics/mikaponics-thing/internal/services"
 	"github.com/mikaponics/mikaponics-thing/internal/controllers"
 	"github.com/mikaponics/mikaponics-thing/internal/models"
 )
@@ -15,6 +16,7 @@ import (
 type MikaponicsThing struct {
 	webServerAddress string
 	dal *models.DataAccessLayer
+	iam *services.IAMClient
 	grpcServer *grpc.Server
 }
 
@@ -29,10 +31,14 @@ func InitMikaponicsThing(dbHost, dbPort, dbUser, dbPassword, dbName, webServerAd
 	dal.CreateSensorTable(false)
 	dal.CreateTimeSeriesDatumTable(false)
 
+    iamAddress := "127.0.0.1:8000"
+	iam := services.InitIAMClient(iamAddress)
+
 	// Create our application instance.
  	return &MikaponicsThing{
 		webServerAddress: webServerAddress,
 		dal: dal,
+		iam: iam,
 		grpcServer: nil,
 	}
 }
@@ -61,6 +67,7 @@ func (app *MikaponicsThing) RunMainRuntimeLoop() {
         // DEVELOPERS NOTE:
         // We want to attach to every gRPC call the following variables...
         DAL: app.dal,
+		IAM: app.iam,
     })
     if err := grpcServer.Serve(lis); err != nil {
         log.Fatalf("failed to serve: %v", err)
