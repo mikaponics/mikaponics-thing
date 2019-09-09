@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"context"
-	"log"
+	// "log"
 
 	// tspb "github.com/golang/protobuf/ptypes/timestamp"
 	"google.golang.org/grpc/codes"
@@ -21,7 +21,7 @@ func (s *MikaponicsThingServer) SetTimeSeriesData(ctx context.Context, in *pb.Se
 	}
 
 	// STEP 2: Confirm the token is valid for the request.
-	
+
 
     // // Iterate through all the data that was submitted by the embedded device.
 	// for _, v := range in.Data {
